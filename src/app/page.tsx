@@ -115,7 +115,7 @@ export default function Home() {
   }, [messages])
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-4 bg-zinc-900">
+    <main className="flex min-h-screen flex-col items-center justify-between p-4 bg-zinc-900 relative">
       <Terminal
         messages={messages}
         input={input}
@@ -123,6 +123,9 @@ export default function Home() {
         handleSubmit={handleSubmit}
         terminalEndRef={terminalEndRef}
       />
+      <footer className="absolute bottom-2 text-center w-full text-zinc-500 text-sm">
+        © {new Date().getFullYear()} Karldritz Farrel Hanson - All Rights Reserved
+      </footer>
     </main>
   )
 }
