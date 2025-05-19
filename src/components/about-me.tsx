@@ -17,12 +17,12 @@ export function AboutMe() {
         </ul>
 
         <p className="mt-4">
-          I have been coding for <span className="text-yellow-400">4 years</span> filling up my experience with multiple fields, from building web applications to solving
-          complex problems with smart solutions. Currently, I prioritize myself in studying Artificial Intelligence since that is what I'm most passionate about.
+          With <span className="text-yellow-400">4 years</span> of coding experience, I've worked across diverse fields, from developing web applications to 
+          solving complex problems with effective solutions. I am now prioritizing my studies in Artificial Intelligence, a field I'm deeply passionate about.
         </p>
 
         <p>
-          When I'm not coding, you can find me fitness, trying new stuffs and/or experimenting with new technologies. I am a curious fellow, wanting to try new experiences.
+          When I'm not coding, you'll find me getting into fitness, trying out new stuff, and experimenting with new tech. I'm a curious person who loves new experiences.
         </p>
       </div>
 
