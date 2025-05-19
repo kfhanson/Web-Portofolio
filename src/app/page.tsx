@@ -7,6 +7,7 @@ import { Terminal } from "@/components/terminal"
 import { AboutMe } from "@/components/about-me"
 import { Projects } from "@/components/projects"
 import { Contact } from "@/components/contact"
+import { CV } from "@/components/cv"
 
 export default function Home() {
   const [input, setInput] = useState("")
@@ -26,6 +27,9 @@ export default function Home() {
             </li>
             <li>
               <span className="text-yellow-400">contact</span> - Get in touch
+            </li>
+            <li>
+              <span className="text-yellow-400">cv</span> - View my resume/CV
             </li>
             <li>
               <span className="text-yellow-400">help</span> - Show available commands
@@ -59,6 +63,9 @@ export default function Home() {
       case "contact":
         response = <Contact />
         break
+      case "cv":
+        response = <CV />
+        break
       case "help":
         response = (
           <div className="space-y-2">
@@ -72,6 +79,9 @@ export default function Home() {
               </li>
               <li>
                 <span className="text-yellow-400">contact</span> - Get in touch
+              </li>
+              <li>
+                <span className="text-yellow-400">cv</span> - View my resume/CV
               </li>
               <li>
                 <span className="text-yellow-400">help</span> - Show available commands
@@ -124,7 +134,7 @@ export default function Home() {
         terminalEndRef={terminalEndRef}
       />
       <footer className="absolute bottom-2 text-center w-full text-zinc-500 text-sm">
-        © {new Date().getFullYear()} Karldritz Farrel Hanson - All Rights Reserved
+        © {new Date().getFullYear()} Your Name - All Rights Reserved
       </footer>
     </main>
   )
