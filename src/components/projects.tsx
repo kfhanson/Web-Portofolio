@@ -1,22 +1,28 @@
 export function Projects() {
   const projects = [
     {
-      name: "E-commerce Platform",
-      tech: "Next.js, Tailwind CSS, Stripe, MongoDB",
-      description: "A full-featured e-commerce solution with payment processing and inventory management.",
+      name: "Trafic Signal Optimization with GNNs",
+      tech: "Python",
+      description: "Implementation of neural networks for traffic simulation in SUMO as an agent to detect congestion, resulting in better traffic.",
       link: "https://github.com/yourusername/ecommerce-platform",
     },
     {
-      name: "Task Management App",
-      tech: "React, Redux, Firebase",
-      description: "A collaborative task management tool with real-time updates and team features.",
+      name: "Portofolio Web",
+      tech: "React, TypeScript",
+      description: "This website is also a project of mine that showcases my capabilities in web design and engineering.",
       link: "https://github.com/yourusername/task-app",
     },
     {
-      name: "Weather Dashboard",
-      tech: "Vue.js, Chart.js, OpenWeather API",
-      description: "An interactive weather visualization tool with forecasting and historical data.",
-      link: "https://github.com/yourusername/weather-dashboard",
+      name: "Image Magnifier",
+      tech: "React, TypeScript",
+      description: "Image magnifier tool, a mini project I created during my project-based learning for React",
+      link: "https://github.com/kfhanson/image-magnifier",
+    },
+    {
+      name: "Lung Cancer Detection and Identification using CNNs",
+      tech: "Python, Keras, OpenCV",
+      description: "As a part of an group assignment, we collaborated to engineer a CT-Scan image analysis of lungs to detect cancer and classify it. High accruracy was achieved.",
+      link: "https://github.com/kfhanson/Lung-Cancer-Detection",
     },
   ]
 
@@ -44,8 +50,7 @@ export function Projects() {
 
       <div className="mt-4">
         <p className="text-zinc-400 italic">
-          Type <span className="text-yellow-400">about</span> to learn more about me or{" "}
-          <span className="text-yellow-400">contact</span> to get in touch.
+          More smaller scale projects available in my GitHub profile. Type <span className="text-yellow-400">contact</span> to visit my social profiles.
         </p>
       </div>
     </div>

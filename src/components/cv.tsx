@@ -26,11 +26,12 @@ export function CV() {
         <div className="mt-4 p-3 border border-zinc-700 rounded-md bg-zinc-800/50">
           <h3 className="text-yellow-400 font-semibold mb-2">CV Highlights</h3>
           <ul className="list-disc list-inside space-y-1 pl-2">
-            <li>X years of professional experience in web development</li>
-            <li>Expertise in React, Next.js, and modern JavaScript</li>
-            <li>Bachelor's degree in Computer Science from University Name</li>
+            <li>Currently studying in BINUS University, Bachelor in Computer Science</li>
+            <li>Studied abroad in Taiwan's Chang Gung University, studied implementations of AI in the healthcare field.</li>
+            <li>Previous roles as research interns in Jakarta</li>
+            <li>Experiences in leadership, coordination and teaching through activity clubs.</li>
+            <li>My research publication in AI</li>
             <li>Certifications in relevant technologies</li>
-            <li>Previous roles at Company A, Company B, and Company C</li>
           </ul>
         </div>
       </div>
