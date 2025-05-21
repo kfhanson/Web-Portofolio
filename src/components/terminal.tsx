@@ -13,16 +13,7 @@ interface TerminalProps {
 
 export function Terminal({ messages, input, setInput, handleSubmit, terminalEndRef }: TerminalProps) {
   return (
-    <div className="w-full max-w-4xl h-[80vh] bg-zinc-900 border border-zinc-700 rounded-md overflow-hidden flex flex-col">
-      <div className="bg-zinc-800 p-2 border-b border-zinc-700 flex items-center">
-        <div className="flex space-x-2 mr-4">
-          <div className="w-3 h-3 rounded-full bg-red-500"></div>
-          <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-          <div className="w-3 h-3 rounded-full bg-green-500"></div>
-        </div>
-        <div className="text-zinc-400 text-sm font-mono">portfolio-terminal</div>
-      </div>
-
+    <div className="flex-1 flex flex-col bg-zinc-900 overflow-hidden">
       <div className="flex-1 p-4 overflow-auto font-mono text-sm text-zinc-300">
         {messages.map((message, index) => (
           <div key={index} className="mb-2">
