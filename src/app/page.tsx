@@ -8,6 +8,7 @@ import { AboutMe } from "@/components/about-me"
 import { Projects } from "@/components/projects"
 import { Contact } from "@/components/contact"
 import { CV } from "@/components/cv"
+import { TechStacks } from "@/components/tech-stacks"
 
 export default function Home() {
   const [input, setInput] = useState("")
@@ -30,6 +31,9 @@ export default function Home() {
             </li>
             <li>
               <span className="text-yellow-400">cv</span> - View my resume/CV
+            </li>
+            <li>
+              <span className="text-yellow-400">tech</span> - View my tech stacks
             </li>
             <li>
               <span className="text-yellow-400">help</span> - Show available commands
@@ -63,10 +67,13 @@ export default function Home() {
       case "contact":
         response = <Contact />
         break
-      case "cv":
-        response = <CV />
-        break
-      case "help":
+        case "cv":
+          response = <CV />
+          break
+        case "tech":
+          response = <TechStacks />
+          break
+        case "help":
         response = (
           <div className="space-y-2">
             <p>Available commands:</p>
@@ -83,6 +90,9 @@ export default function Home() {
               <li>
                 <span className="text-yellow-400">cv</span> - View my resume/CV
               </li>
+              <li>
+              <span className="text-yellow-400">tech</span> - View my tech stacks
+            </li>
               <li>
                 <span className="text-yellow-400">help</span> - Show available commands
               </li>
