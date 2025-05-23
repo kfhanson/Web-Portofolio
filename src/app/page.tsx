@@ -9,7 +9,7 @@ import { Projects } from "@/components/projects"
 import { Contact } from "@/components/contact"
 import { CV } from "@/components/cv"
 import { TechStacks } from "@/components/tech-stacks"
-import { GripVertical, ArrowRightIcon as ArrowsMaximize, Minimize2, X } from "lucide-react"
+import { GripVertical, TerminalIcon } from "lucide-react"
 import { useMobile } from "@/hooks/use-mobile"
 
 export default function Home() {
@@ -61,6 +61,10 @@ export default function Home() {
   const [isMaximized, setIsMaximized] = useState(false)
   const [prevSize, setPrevSize] = useState({ width: 800, height: 600 })
   const [prevPosition, setPrevPosition] = useState({ x: 0, y: 0 })
+  const [isTerminalVisible, setIsTerminalVisible] = useState(true)
+
+  // Shortcut position
+  const [shortcutPosition, setShortcutPosition] = useState({ x: 20, y: 20 })
 
   // Drag state
   const dragStartPos = useRef({ x: 0, y: 0 })
@@ -73,6 +77,10 @@ export default function Home() {
       const centerX = Math.max(0, (window.innerWidth - size.width) / 2)
       const centerY = Math.max(0, (window.innerHeight - size.height) / 2)
       setPosition({ x: centerX, y: centerY })
+      setShortcutPosition({
+        x: window.innerWidth - 100,
+        y: 20,
+      })
     }
   }, [])
 
@@ -265,13 +273,22 @@ export default function Home() {
       setPrevSize(size)
       setPrevPosition(position)
       // Maximize
-      setSize({ width: window.innerWidth, height: window.innerHeight })
+      setSize({ width: window.innerWidth, height: window.innerHeight - 40})
       setPosition({ x: 0, y: 0 })
     }
     setIsMaximized(!isMaximized)
   }
 
-  // Close terminal (reset to center)
+  // Close terminal (hide)
+  const closeTerminal = () => {
+    setIsTerminalVisible(false)
+  }
+
+  // Open terminal
+  const openTerminal = () => {
+    setIsTerminalVisible(true)
+  }
+
   const resetTerminal = () => {
     const centerX = Math.max(0, (window.innerWidth - 800) / 2)
     const centerY = Math.max(0, (window.innerHeight - 600) / 2)
@@ -313,99 +330,121 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-zinc-900 overflow-hidden">
+      {/* Terminal shortcut icon - always visible */}
       <div
-        ref={terminalRef}
-        className="absolute shadow-xl rounded-md overflow-hidden flex flex-col"
+        className="absolute w-16 h-16 bg-zinc-800 rounded-lg shadow-lg flex flex-col items-center justify-center cursor-pointer hover:bg-zinc-700 transition-colors z-10"
         style={{
-          width: isMobile ? "100%" : `${size.width}px`,
-          height: isMobile ? "100%" : `${size.height}px`,
-          left: isMobile ? 0 : `${position.x}px`,
-          top: isMobile ? 0 : `${position.y}px`,
-          transition: isDragging || isResizing ? "none" : "box-shadow 0.3s ease",
+          left: `${shortcutPosition.x}px`,
+          top: `${shortcutPosition.y}px`,
         }}
+        onClick={openTerminal}
       >
-        <div
-          className={`bg-zinc-800 p-2 border-b border-zinc-700 flex items-center ${
-            !isMobile && !isMaximized ? "cursor-move" : ""
-          }`}
-          onMouseDown={startDrag}
-        >
-          <div className="flex space-x-2 mr-4">
-            <div className="w-3 h-3 rounded-full bg-red-500 cursor-pointer" onClick={resetTerminal}></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500 cursor-pointer" onClick={toggleMaximize}></div>
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
-          </div>
-          <div className="text-zinc-400 text-sm font-mono flex-1">portfolio-terminal</div>
-          {!isMobile && (
-            <div className="flex items-center space-x-2 text-zinc-500">
-              <GripVertical size={16} className="drag-handle" />
-              {isMaximized ? (
-                <Minimize2 size={16} className="cursor-pointer" onClick={toggleMaximize} />
-              ) : (
-                <ArrowsMaximize size={16} className="cursor-pointer" onClick={toggleMaximize} />
-              )}
-              <X size={16} className="cursor-pointer" onClick={resetTerminal} />
-            </div>
-          )}
-        </div>
-      <Terminal
-        messages={messages}
-        input={input}
-        setInput={setInput}
-        handleSubmit={handleSubmit}
-        terminalEndRef={terminalEndRef}
-      />
-        {!isMobile && !isMaximized && (
-          <>
-            <div
-              className="absolute top-0 left-0 w-4 h-4 cursor-nw-resize z-10"
-              onMouseDown={(e) => startResize(e, "nw")}
-            />
-            <div
-              className="absolute top-0 right-0 w-4 h-4 cursor-ne-resize z-10"
-              onMouseDown={(e) => startResize(e, "ne")}
-            />
-            <div
-              className="absolute bottom-0 left-0 w-4 h-4 cursor-sw-resize z-10"
-              onMouseDown={(e) => startResize(e, "sw")}
-            />
-            <div
-              className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize z-10 flex items-center justify-center"
-              onMouseDown={(e) => startResize(e, "se")}
-            >
-              <svg
-                width="10"
-                height="10"
-                viewBox="0 0 10 10"
-                className="text-zinc-500"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M0 0V3H3V0H0ZM7 0V3H10V0H7ZM0 7V10H3V7H0ZM7 7V10H10V7H7Z" />
-              </svg>
-            </div>
-            <div
-              className="absolute top-0 left-4 right-4 h-2 cursor-n-resize"
-              onMouseDown={(e) => startResize(e, "n")}
-            />
-            <div
-              className="absolute bottom-0 left-4 right-4 h-2 cursor-s-resize"
-              onMouseDown={(e) => startResize(e, "s")}
-            />
-            <div
-              className="absolute left-0 top-4 bottom-4 w-2 cursor-w-resize"
-              onMouseDown={(e) => startResize(e, "w")}
-            />
-            <div
-              className="absolute right-0 top-4 bottom-4 w-2 cursor-e-resize"
-              onMouseDown={(e) => startResize(e, "e")}
-            />
-          </>
-        )}
+        <TerminalIcon size={32} className="text-green-400" />
+        <span className="text-xs text-zinc-300 mt-1">Terminal</span>
       </div>
 
-      <footer className="absolute bottom-2 text-center w-full text-zinc-500 text-sm z-0">
-        © {new Date().getFullYear()} Karldritz Farrel Hanson - All Rights Reserved
+      {isTerminalVisible && (
+        <div
+          ref={terminalRef}
+          className="absolute shadow-xl rounded-md overflow-hidden flex flex-col z-20"
+          style={{
+            width: isMobile ? "100%" : `${size.width}px`,
+            height: isMobile ? "calc(100% - 40px)" : `${size.height}px`, // Leave space for footer on mobile
+            left: isMobile ? 0 : `${position.x}px`,
+            top: isMobile ? 0 : `${position.y}px`,
+            transition: isDragging || isResizing ? "none" : "box-shadow 0.3s ease",
+          }}
+        >
+          {/* Terminal header with drag handle */}
+          <div
+            className={`bg-zinc-800 p-2 border-b border-zinc-700 flex items-center ${
+              !isMobile && !isMaximized ? "cursor-move" : ""
+            }`}
+            onMouseDown={startDrag}
+          >
+            <div className="flex space-x-2 mr-4">
+              <div
+                className="w-3 h-3 rounded-full bg-red-500 cursor-pointer hover:brightness-110 transition-all"
+                onClick={closeTerminal}
+                title="Close"
+              ></div>
+              <div
+                className="w-3 h-3 rounded-full bg-yellow-500 cursor-pointer hover:brightness-110 transition-all"
+                onClick={toggleMaximize}
+                title={isMaximized ? "Exit Full Screen" : "Full Screen"}
+              ></div>
+              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <div className="text-zinc-400 text-sm font-mono flex-1 text-center">portfolio-terminal</div>
+            {!isMobile && (
+              <div className="flex items-center space-x-2 text-zinc-500">
+                <GripVertical size={16} className="drag-handle opacity-50" />
+              </div>
+            )}
+          </div>
+
+          {/* Terminal content */}
+          <Terminal
+            messages={messages}
+            input={input}
+            setInput={setInput}
+            handleSubmit={handleSubmit}
+            terminalEndRef={terminalEndRef}
+          />
+
+          {/* Resize handles - only show when not maximized and not on mobile */}
+          {!isMobile && !isMaximized && (
+            <>
+              <div
+                className="absolute top-0 left-0 w-4 h-4 cursor-nw-resize z-10"
+                onMouseDown={(e) => startResize(e, "nw")}
+              />
+              <div
+                className="absolute top-0 right-0 w-4 h-4 cursor-ne-resize z-10"
+                onMouseDown={(e) => startResize(e, "ne")}
+              />
+              <div
+                className="absolute bottom-0 left-0 w-4 h-4 cursor-sw-resize z-10"
+                onMouseDown={(e) => startResize(e, "sw")}
+              />
+              <div
+                className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize z-10 flex items-center justify-center"
+                onMouseDown={(e) => startResize(e, "se")}
+              >
+                <svg
+                  width="10"
+                  height="10"
+                  viewBox="0 0 10 10"
+                  className="text-zinc-500"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M0 0V3H3V0H0ZM7 0V3H10V0H7ZM0 7V10H3V7H0ZM7 7V10H10V7H7Z" />
+                </svg>
+              </div>
+              <div
+                className="absolute top-0 left-4 right-4 h-2 cursor-n-resize"
+                onMouseDown={(e) => startResize(e, "n")}
+              />
+              <div
+                className="absolute bottom-0 left-4 right-4 h-2 cursor-s-resize"
+                onMouseDown={(e) => startResize(e, "s")}
+              />
+              <div
+                className="absolute left-0 top-4 bottom-4 w-2 cursor-w-resize"
+                onMouseDown={(e) => startResize(e, "w")}
+              />
+              <div
+                className="absolute right-0 top-4 bottom-4 w-2 cursor-e-resize"
+                onMouseDown={(e) => startResize(e, "e")}
+              />
+            </>
+          )}
+        </div>
+      )}
+
+      <footer className="absolute bottom-0 left-0 right-0 h-10 flex items-center justify-center bg-zinc-900 border-t border-zinc-800 z-0">
+        <span className="text-zinc-500 text-sm">© {new Date().getFullYear()} Karldritz Farrel Hanson - All Rights Reserved</span>
       </footer>
     </main>
   )
