@@ -8,7 +8,7 @@ interface TerminalProps {
   input: string
   setInput: (input: string) => void
   handleSubmit: (e: React.FormEvent) => void
-  terminalEndRef: React.RefObject<HTMLDivElement>
+  terminalEndRef: React.RefObject<HTMLDivElement | null>
 }
 
 export function Terminal({ messages, input, setInput, handleSubmit, terminalEndRef }: TerminalProps) {

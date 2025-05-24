@@ -144,11 +144,11 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
   ) => {
     const canvas = useRef<HTMLDivElement>(null)
     const engine = useRef(Engine.create())
-    const render = useRef<Render>()
-    const runner = useRef<Runner>()
+    const render = useRef<Render | null>(null)
+    const runner = useRef<Runner | null>(null)
     const bodiesMap = useRef(new Map<string, PhysicsBody>())
-    const frameId = useRef<number>()
-    const mouseConstraint = useRef<Matter.MouseConstraint>()
+    const frameId = useRef<number | null>(null)
+    const mouseConstraint = useRef<Matter.MouseConstraint | null>(null)
     const mouseDown = useRef(false)
     const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 })
 
