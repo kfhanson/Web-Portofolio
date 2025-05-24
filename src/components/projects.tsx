@@ -12,14 +12,14 @@ export function Projects() {
         name: "Trafic Signal Optimization with LSTM",
         tech: "Python, SUMO",
         description: "Implementation of neural networks for traffic simulation in SUMO as an agent to detect congestion, resulting in better traffic.",
-        link: "https://github.com/yourusername/ecommerce-platform",
+        link: "https://github.com/kfhanson/Traffic-Signal-Optimization-using-Q-Learning-and-SUMO",
         categories: ["ai", "iot"],
       },
       {
         name: "Portofolio Web",
         tech: "React, TypeScript",
         description: "This website is also a project of mine that showcases my capabilities in web design and engineering.",
-        link: "https://github.com/yourusername/task-app",
+        link: "https://github.com/kfhanson/terminal",
         categories: ["web"],
       },
       {
