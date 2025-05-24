@@ -1,4 +1,4 @@
-import { Mail, Github, Linkedin, Twitter } from "lucide-react"
+import { Mail, Github, Linkedin, BookOpen } from "lucide-react"
 
 export function Contact() {
   return (
@@ -37,6 +37,18 @@ export function Contact() {
               className="text-blue-400 hover:underline"
             >
               linkedin.com/in/karldritz
+            </a>
+          </div>
+
+          <div className="flex items-center">
+            <BookOpen className="text-yellow-400 mr-3" size={18} />
+            <a
+              href="https://medium.com/@karldritz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline"
+            >
+              medium.com/@karldritz
             </a>
           </div>
         </div>

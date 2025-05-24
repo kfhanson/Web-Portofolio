@@ -14,6 +14,7 @@ export function AboutMe() {
           <li>Frontend Development (React, Next.js, JavaScript, TypeScript)</li>
           <li>Backend Integration (PHP, MySQL)</li>
           <li>Data Science/Analytics (SPSS, Power BI)</li>
+          <li>Cloud Services (AWS)</li>
         </ul>
 
         <p className="mt-4">

@@ -12,35 +12,35 @@ export function Projects() {
       tech: "Python, SUMO",
       description: "Implementation of neural networks for traffic simulation in SUMO as an agent to detect congestion, resulting in better traffic.",
       link: "https://github.com/yourusername/ecommerce-platform",
-      category: "ai",
+      categories: ["ai", "iot"],
     },
     {
       name: "Portofolio Web",
       tech: "React, TypeScript",
       description: "This website is also a project of mine that showcases my capabilities in web design and engineering.",
       link: "https://github.com/yourusername/task-app",
-      category: "web",
+      categories: ["web"],
     },
     {
       name: "Image Magnifier",
       tech: "React, TypeScript",
       description: "Image magnifier tool, a mini project I created during my project-based learning for React",
       link: "https://github.com/kfhanson/image-magnifier",
-      category: "web",
+      categories: ["web"],
     },
     {
       name: "Lung Cancer Detection and Identification using CNNs",
       tech: "Python, Keras, OpenCV",
       description: "As a part of an group assignment, we collaborated to engineer a CT-Scan image analysis of lungs to detect cancer and classify it. High accruracy was achieved.",
       link: "https://github.com/kfhanson/Lung-Cancer-Detection",
-      category: "ai",
+      categories: ["ai"],
     },
     {
       name: "SageMaker LLM via Lambda",
       tech: "Python, Lambda, Amazon SageMaker AI, S3 Bucket",
       description: "To learn more about AWS and it's services, I created a project that utilizes the tools available in the AWS console.",
       link: "https://github.com/kfhanson/AWS-LLM-Connector",
-      category: "cloud",
+      categories: ["cloud", "ai"],
     },
   ]
 
@@ -48,14 +48,14 @@ export function Projects() {
     web: "border-green-500",
     ai: "border-purple-500",
     cloud: "border-blue-500",
-    other: "border-cyan-500",
+    iot: "border-cyan-500",
   }
 
   const categoryLabels = {
     web: { text: "Web Development", bg: "bg-green-500" },
     ai: { text: "AI/ML", bg: "bg-purple-500" },
     cloud: { text: "Cloud Computing", bg: "bg-blue-500" },
-    other: { text: "IoT", bg: "bg-cyan-500" },
+    iot: { text: "IoT", bg: "bg-cyan-500" },
   }
 
   // Search and Filters
@@ -86,7 +86,9 @@ export function Projects() {
 
     // Apply category filters if any are active
     if (activeFilters.length > 0) {
-      result = result.filter((project) => activeFilters.includes(project.category))
+      result = result.filter((project) =>
+        project.categories.some((category) => activeFilters.includes(category)),
+      )
     }
 
     // Apply search query if it exists
@@ -102,6 +104,11 @@ export function Projects() {
 
     setFilteredProjects(result)
   }, [searchQuery, activeFilters])
+
+  // Get primary category for border color (using first category)
+  const getPrimaryCategory = (categories: string[]) => {
+    return categories[0] || "web" // Default to web if no categories
+  }
 
   return (
     <div className="space-y-4">
@@ -161,18 +168,23 @@ export function Projects() {
             <div
               key={index}
               className={`border-l-4 ${
-                categoryColors[project.category as keyof typeof categoryColors]
+                categoryColors[getPrimaryCategory(project.categories) as keyof typeof categoryColors]
               } rounded-md p-3 bg-zinc-800/50`}
             >
               <div className="flex justify-between items-start">
                 <h3 className="text-yellow-400 font-semibold">{project.name}</h3>
-                <span
-                  className={`${
-                    categoryLabels[project.category as keyof typeof categoryLabels].bg
-                  } text-white text-xs px-2 py-1 rounded`}
-                >
-                  {categoryLabels[project.category as keyof typeof categoryLabels].text}
-                </span>
+                <div className="flex flex-wrap gap-1 justify-end">
+                  {project.categories.map((category) => (
+                    <span
+                      key={category}
+                      className={`${
+                        categoryLabels[category as keyof typeof categoryLabels].bg
+                      } text-white text-xs px-2 py-1 rounded`}
+                    >
+                      {categoryLabels[category as keyof typeof categoryLabels].text}
+                    </span>
+                  ))}
+                </div>
               </div>
               <div className="text-zinc-400 text-sm mt-1">{project.tech}</div>
               <p className="mt-2">{project.description}</p>

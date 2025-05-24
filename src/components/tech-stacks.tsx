@@ -118,16 +118,15 @@ export function TechStacks() {
           <MatterBody matterBodyOptions={{ friction: 0.5, restitution: 0.7 }} x="45%" y="85%">
             <div className="text-sm bg-[#ff4154] text-white rounded-full hover:cursor-grab px-4 py-2">Git</div>
           </MatterBody>
-          <MatterBody matterBodyOptions={{ friction: 0.5, restitution: 0.7 }} x="65%" y="80%">
-            <div className="text-sm bg-[#ff4154] text-white rounded-full hover:cursor-grab px-4 py-2">Power BI</div>
+          <MatterBody matterBodyOptions={{ friction: 0.5, restitution: 0.7 }} x="15%" y="75%">
+            <div className="text-sm bg-[#ff4154] text-white rounded-full hover:cursor-grab px-4 py-2">AWS Lambda</div>
           </MatterBody>
 
-
+          <MatterBody matterBodyOptions={{ friction: 0.5, restitution: 0.7 }} x="65%" y="80%">
+            <div className="text-sm bg-[#4db33d] text-white rounded-full hover:cursor-grab px-4 py-2">Power BI</div>
+          </MatterBody>
           <MatterBody matterBodyOptions={{ friction: 0.5, restitution: 0.7 }} x="85%" y="85%">
             <div className="text-sm bg-[#4db33d] text-white rounded-full hover:cursor-grab px-4 py-2">SPSS</div>
-          </MatterBody>
-          <MatterBody matterBodyOptions={{ friction: 0.5, restitution: 0.7 }} x="15%" y="75%">
-            <div className="text-sm bg-[#4db33d] text-white rounded-full hover:cursor-grab px-4 py-2">Lambda</div>
           </MatterBody>
         </Gravity>
       </div>
