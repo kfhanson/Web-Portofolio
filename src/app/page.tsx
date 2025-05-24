@@ -82,7 +82,7 @@ export default function Home() {
         y: 20,
       })
     }
-  }, [])
+  }, [size.width, size.height])
 
   const handleCommand = (cmd: string) => {
     const command = cmd.trim().toLowerCase()
@@ -287,45 +287,6 @@ export default function Home() {
   // Open terminal
   const openTerminal = () => {
     setIsTerminalVisible(true)
-  }
-
-  const resetTerminal = () => {
-    const centerX = Math.max(0, (window.innerWidth - 800) / 2)
-    const centerY = Math.max(0, (window.innerHeight - 600) / 2)
-    setSize({ width: 800, height: 600 })
-    setPosition({ x: centerX, y: centerY })
-    setIsMaximized(false)
-    setMessages([
-      {
-        type: "response",
-        content: (
-          <div className="space-y-2">
-            <p className="text-green-400">Welcome to my portfolio terminal!</p>
-            <p>Type one of the following commands to navigate:</p>
-            <ul className="list-disc list-inside">
-              <li>
-                <span className="text-yellow-400">about</span> - Learn about me
-              </li>
-              <li>
-                <span className="text-yellow-400">projects</span> - View my projects
-              </li>
-              <li>
-                <span className="text-yellow-400">contact</span> - Get in touch
-              </li>
-              <li>
-                <span className="text-yellow-400">cv</span> - View my resume/CV
-              </li>
-              <li>
-                <span className="text-yellow-400">help</span> - Show available commands
-              </li>
-              <li>
-                <span className="text-yellow-400">clear</span> - Clear the terminal
-              </li>
-            </ul>
-          </div>
-        ),
-      },
-    ])
   }
 
   return (

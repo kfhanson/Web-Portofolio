@@ -27,7 +27,7 @@ export function CV() {
           <h3 className="text-yellow-400 font-semibold mb-2">CV Highlights</h3>
           <ul className="list-disc list-inside space-y-1 pl-2">
             <li>Currently studying in BINUS University, Bachelor in Computer Science</li>
-            <li>Studied abroad in Taiwan's Chang Gung University, studied implementations of AI in the healthcare field.</li>
+            <li>Studied abroad in Taiwan&apos;s Chang Gung University, studied implementations of AI in the healthcare field.</li>
             <li>Previous roles as research interns in Jakarta</li>
             <li>Experiences in leadership, coordination and teaching through activity clubs.</li>
             <li>My research publication in AI</li>

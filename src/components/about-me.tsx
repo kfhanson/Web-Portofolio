@@ -5,7 +5,7 @@ export function AboutMe() {
 
       <div className="space-y-2">
         <p>
-          Hi! I'm <span className="text-yellow-400">Karldritz Farrel Hanson</span>, a try-hard student with expertise in:
+          Hi! I&apos;m <span className="text-yellow-400">Karldritz Farrel Hanson</span>, a try-hard student with expertise in:
         </p>
 
         <ul className="list-disc list-inside pl-4">
@@ -18,12 +18,12 @@ export function AboutMe() {
         </ul>
 
         <p className="mt-4">
-          With <span className="text-yellow-400">4 years</span> of coding experience, I've worked across diverse fields, from developing web applications to 
-          solving complex problems with effective solutions. I am now prioritizing my studies in Artificial Intelligence, a field I'm deeply passionate about.
+          With <span className="text-yellow-400">4 years</span> of coding experience, I&apos;ve worked across diverse fields, from developing web applications to 
+          solving complex problems with effective solutions. I am now prioritizing my studies in Artificial Intelligence, a field I&apos;m deeply passionate about.
         </p>
 
         <p>
-          When I'm not coding, you'll find me getting into fitness, trying out new stuff, and experimenting with new tech. I'm a curious person who loves new experiences.
+          When I&apos;m not coding, you&apos;ll find me getting into fitness, trying out new stuff, and experimenting with new tech. I&apos;m a curious person who loves new experiences.
         </p>
       </div>
 

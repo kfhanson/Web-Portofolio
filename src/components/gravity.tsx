@@ -72,7 +72,6 @@ export const MatterBody = ({
   x = 0,
   y = 0,
   angle = 0,
-  ...props
 }: MatterBodyProps) => {
   const elementRef = useRef<HTMLDivElement>(null)
   const idRef = useRef(Math.random().toString(36).substring(7))
@@ -80,7 +79,8 @@ export const MatterBody = ({
 
   useEffect(() => {
     if (!elementRef.current || !context) return
-    context.registerElement(idRef.current, elementRef.current, {
+    const currentId = idRef.current
+    context.registerElement(currentId, elementRef.current, {
       children,
       matterBodyOptions,
       bodyType,
@@ -91,8 +91,8 @@ export const MatterBody = ({
       angle,
     })
 
-    return () => context.unregisterElement(idRef.current)
-  }, [children, matterBodyOptions, isDraggable, x, y, angle])
+    return () => context.unregisterElement(currentId)
+  }, [children, matterBodyOptions, isDraggable, x, y, angle, bodyType, context, sampleLength])
 
   return (
     <div ref={elementRef} className={cn("absolute", className, isDraggable && "pointer-events-none")}>
@@ -102,7 +102,7 @@ export const MatterBody = ({
 }
 
 // Helper function to calculate position
-const calculatePosition = (pos: number | string | undefined, containerSize: number, elementSize: number): number => {
+const calculatePosition = (pos: number | string | undefined, containerSize: number): number => {
   if (pos === undefined) return 0
 
   if (typeof pos === "number") return pos
@@ -116,7 +116,7 @@ const calculatePosition = (pos: number | string | undefined, containerSize: numb
 }
 
 // Helper function to parse SVG path to vertices
-const parsePathToVertices = (path: string, sampleLength: number) => {
+const parsePathToVertices = () => {
   // This is a simplified version - in a real implementation, you'd need a proper SVG path parser
   // For now, we'll just return a simple rectangle
   return [
@@ -164,8 +164,8 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
 
         const angle = (props.angle || 0) * (Math.PI / 180)
 
-        const x = calculatePosition(props.x, canvasRect.width, width)
-        const y = calculatePosition(props.y, canvasRect.height, height)
+        const x = calculatePosition(props.x, canvasRect.width)
+        const y = calculatePosition(props.y, canvasRect.height)
 
         let body
         if (props.bodyType === "circle") {
@@ -183,12 +183,9 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
           const paths = element.querySelectorAll("path")
           const vertexSets: Matter.Vector[][] = []
 
-          paths.forEach((path) => {
-            const d = path.getAttribute("d")
-            if (d) {
-              const p = parsePathToVertices(d, props.sampleLength || 15)
-              vertexSets.push(p)
-            }
+          paths.forEach(() => {
+            const p = parsePathToVertices()
+            vertexSets.push(p)
           })
 
           body = Bodies.fromVertices(x, y, vertexSets, {
@@ -243,6 +240,19 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
       frameId.current = requestAnimationFrame(updateElements)
     }, [])
 
+    const startEngine = useCallback(() => {
+        if (runner.current) {
+        runner.current.enabled = true
+
+        Runner.run(runner.current, engine.current)
+        }
+        if (render.current) {
+        Render.run(render.current)
+        }
+        frameId.current = requestAnimationFrame(updateElements)
+        isRunning.current = true
+    }, [updateElements])
+
     const initializeRenderer = useCallback(() => {
       if (!canvas.current) return
 
@@ -251,9 +261,9 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
 
       // Simplified poly-decomp handling
       try {
-        // @ts-ignore
+        // @ts-expect-error - poly-decomp is a global library
         Common.setDecomp(window.decomp)
-      } catch (e) {
+      } catch {
         console.warn("Poly-decomp not available, SVG bodies may not work correctly")
       }
 
@@ -330,7 +340,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
         Query.point(engine.current.world.bodies, mouseConstraint.current?.mouse.position || { x: 0, y: 0 }).length > 0
 
       if (grabCursor) {
-        Events.on(engine.current, "beforeUpdate", (event) => {
+        Events.on(engine.current, "beforeUpdate", () => {
           if (canvas.current) {
             if (!mouseDown.current && !touchingMouse()) {
               canvas.current.style.cursor = "default"
@@ -340,7 +350,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
           }
         })
 
-        canvas.current.addEventListener("mousedown", (event) => {
+        canvas.current.addEventListener("mousedown", () => {
           mouseDown.current = true
 
           if (canvas.current) {
@@ -351,7 +361,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
             }
           }
         })
-        canvas.current.addEventListener("mouseup", (event) => {
+        canvas.current.addEventListener("mouseup", () => {
           mouseDown.current = false
 
           if (canvas.current) {
@@ -377,7 +387,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
         runner.current.enabled = true
         startEngine()
       }
-    }, [updateElements, debug, autoStart, gravity, addTopWall])
+    }, [updateElements, debug, autoStart, gravity, addTopWall, grabCursor, startEngine])
 
     // Clear the Matter.js world
     const clearRenderer = useCallback(() => {
@@ -420,19 +430,6 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
       initializeRenderer()
     }, [clearRenderer, initializeRenderer, resetOnResize])
 
-    const startEngine = useCallback(() => {
-      if (runner.current) {
-        runner.current.enabled = true
-
-        Runner.run(runner.current, engine.current)
-      }
-      if (render.current) {
-        Render.run(render.current)
-      }
-      frameId.current = requestAnimationFrame(updateElements)
-      isRunning.current = true
-    }, [updateElements])
-
     const stopEngine = useCallback(() => {
       if (!isRunning.current) return
 
@@ -450,11 +447,11 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
 
     const reset = useCallback(() => {
       stopEngine()
-      bodiesMap.current.forEach(({ element, body, props }) => {
+      bodiesMap.current.forEach(({ body, props }) => {
         body.angle = props.angle || 0
 
-        const x = calculatePosition(props.x, canvasSize.width, element.offsetWidth)
-        const y = calculatePosition(props.y, canvasSize.height, element.offsetHeight)
+        const x = calculatePosition(props.x, canvasSize.width)
+        const y = calculatePosition(props.y, canvasSize.height)
         body.position.x = x
         body.position.y = y
       })

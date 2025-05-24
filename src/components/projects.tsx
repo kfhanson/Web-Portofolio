@@ -1,48 +1,51 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Search, Filter } from "lucide-react"
 
 
 export function Projects() {
-  const projects = [
-    {
-      name: "Trafic Signal Optimization with LSTM",
-      tech: "Python, SUMO",
-      description: "Implementation of neural networks for traffic simulation in SUMO as an agent to detect congestion, resulting in better traffic.",
-      link: "https://github.com/yourusername/ecommerce-platform",
-      categories: ["ai", "iot"],
-    },
-    {
-      name: "Portofolio Web",
-      tech: "React, TypeScript",
-      description: "This website is also a project of mine that showcases my capabilities in web design and engineering.",
-      link: "https://github.com/yourusername/task-app",
-      categories: ["web"],
-    },
-    {
-      name: "Image Magnifier",
-      tech: "React, TypeScript",
-      description: "Image magnifier tool, a mini project I created during my project-based learning for React",
-      link: "https://github.com/kfhanson/image-magnifier",
-      categories: ["web"],
-    },
-    {
-      name: "Lung Cancer Detection and Identification using CNNs",
-      tech: "Python, Keras, OpenCV",
-      description: "As a part of an group assignment, we collaborated to engineer a CT-Scan image analysis of lungs to detect cancer and classify it. High accruracy was achieved.",
-      link: "https://github.com/kfhanson/Lung-Cancer-Detection",
-      categories: ["ai"],
-    },
-    {
-      name: "SageMaker LLM via Lambda",
-      tech: "Python, Lambda, Amazon SageMaker AI, S3 Bucket",
-      description: "To learn more about AWS and it's services, I created a project that utilizes the tools available in the AWS console.",
-      link: "https://github.com/kfhanson/AWS-LLM-Connector",
-      categories: ["cloud", "ai"],
-    },
-  ]
+  const projects = useMemo(
+    () => [
+      {
+        name: "Trafic Signal Optimization with LSTM",
+        tech: "Python, SUMO",
+        description: "Implementation of neural networks for traffic simulation in SUMO as an agent to detect congestion, resulting in better traffic.",
+        link: "https://github.com/yourusername/ecommerce-platform",
+        categories: ["ai", "iot"],
+      },
+      {
+        name: "Portofolio Web",
+        tech: "React, TypeScript",
+        description: "This website is also a project of mine that showcases my capabilities in web design and engineering.",
+        link: "https://github.com/yourusername/task-app",
+        categories: ["web"],
+      },
+      {
+        name: "Image Magnifier",
+        tech: "React, TypeScript",
+        description: "Image magnifier tool, a mini project I created during my project-based learning for React",
+        link: "https://github.com/kfhanson/image-magnifier",
+        categories: ["web"],
+      },
+      {
+        name: "Lung Cancer Detection and Identification using CNNs",
+        tech: "Python, Keras, OpenCV",
+        description: "As a part of an group assignment, we collaborated to engineer a CT-Scan image analysis of lungs to detect cancer and classify it. High accruracy was achieved.",
+        link: "https://github.com/kfhanson/Lung-Cancer-Detection",
+        categories: ["ai"],
+      },
+      {
+        name: "SageMaker LLM via Lambda",
+        tech: "Python, Lambda, Amazon SageMaker AI, S3 Bucket",
+        description: "To learn more about AWS and it's services, I created a project that utilizes the tools available in the AWS console.",
+        link: "https://github.com/kfhanson/AWS-LLM-Connector",
+        categories: ["cloud", "ai"],
+      },
+    ],
+    [],
+  )
 
   const categoryColors = {
     web: "border-green-500",
@@ -103,7 +106,7 @@ export function Projects() {
     }
 
     setFilteredProjects(result)
-  }, [searchQuery, activeFilters])
+  }, [searchQuery, activeFilters, projects])
 
   // Get primary category for border color (using first category)
   const getPrimaryCategory = (categories: string[]) => {
@@ -214,7 +217,7 @@ export function Projects() {
           <span className="text-yellow-400 font-semibold">More projects coming soon!</span>
         </p>
         <p className="text-sm text-zinc-500 mt-1">
-          I'm constantly working on new and exciting projects. Check back later for updates.
+          I&apos;m constantly working on new and exciting projects. Check back later for updates.
         </p>
       </div>
 
